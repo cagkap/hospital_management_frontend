@@ -6,6 +6,7 @@ import PatientQuery from "./components/shared/patient/query/PatientQuery";
 import "./styles.css";
 import { Layout } from "antd";
 import { useState } from "react";
+import CustomHeader from "./components/shared/CustomHeader";
 const { Header, Footer, Sider, Content } = Layout;
 
 function App() {
@@ -22,8 +23,14 @@ function App() {
         >
           <Navbar></Navbar>
         </Sider>
-
-        <PatientQuery></PatientQuery>
+        <Layout>
+          <Header className="bg-white h-16">
+            <CustomHeader></CustomHeader>
+          </Header>
+          <div className="m-2">
+            <PatientQuery></PatientQuery>
+          </div>
+        </Layout>
       </Layout>
     </div>
   );

@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Button, Table, Space, Tag } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
 const { Column, ColumnGroup } = Table;
 
-const CriteriaPanel = ({ criteriaPanelComponent, defaultQueryInfo }) => {
+const CriteriaPanel = ({
+  criteriaPanelComponent,
+  defaultQueryInfo,
+  children,
+}) => {
   const [queryInfo, setQueryInfo] = useState({
     page: 0,
     size: 2,
@@ -62,22 +67,24 @@ const CriteriaPanel = ({ criteriaPanelComponent, defaultQueryInfo }) => {
         getTargetPathValue: (path) => queryInfo[path],
         handleChildErrorChange: setError,
       })}
-      {loading && <p>Loading...</p>}
-      {error && <p style={{ color: "red" }}>Error: {error}</p>}
-      <Button type="primary" onClick={fetchData}>
-        Submit
+
+      <Button
+        type="primary"
+        icon={<SearchOutlined />}
+        className="bg-blue-400"
+        onClick={fetchData}
+      >
+        Query
       </Button>
       <Table
+        className="mt-2 "
         dataSource={results.content}
         pagination={{
           onChange: handlePaginationChange,
           total: 500,
         }}
       >
-        <Column title="First Name" dataIndex="name" key="name" />
-        <Column title="Surname" dataIndex="surname" key="name" />
-        <Column title="Age" dataIndex="age" key="name" />
-        <Column title="Identity Number" dataIndex="identityNum" key="name" />
+        {children}
       </Table>
     </div>
   );
