@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Button, Table, Space, Tag } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
+import { Button, Table, Space, Tag, Flex } from "antd";
+import { SearchOutlined, PlusOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 const { Column, ColumnGroup } = Table;
 
 const CriteriaPanel = ({
   criteriaPanelComponent,
+  addButtonActive,
   defaultQueryInfo,
   children,
 }) => {
@@ -17,6 +19,7 @@ const CriteriaPanel = ({
   const [results, setResults] = useState([{}]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const handleQueryInfoChange = ({ path, value }) => {
     console.log(value);
@@ -67,15 +70,27 @@ const CriteriaPanel = ({
         getTargetPathValue: (path) => queryInfo[path],
         handleChildErrorChange: setError,
       })}
+      <Flex justify="space-between" align="flex-end">
+        <Button
+          type="primary"
+          icon={<SearchOutlined />}
+          className="bg-blue-400"
+          onClick={fetchData}
+        >
+          Query
+        </Button>
 
-      <Button
-        type="primary"
-        icon={<SearchOutlined />}
-        className="bg-blue-400"
-        onClick={fetchData}
-      >
-        Query
-      </Button>
+        {addButtonActive && (
+          <Button
+            type="primary"
+            className="bg-blue-400"
+            icon={<PlusOutlined />}
+            onClick={() => navigate("/patient/add")}
+          >
+            Add
+          </Button>
+        )}
+      </Flex>
       <Table
         className="mt-2 "
         dataSource={results.content}

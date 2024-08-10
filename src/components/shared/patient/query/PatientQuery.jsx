@@ -22,6 +22,7 @@ const PatientQuery = () => {
             handleChildErrorChange={handleChildErrorChange}
           ></PatientCriteria>
         )}
+        addButtonActive={true}
       >
         <Column title="First Name" dataIndex="name" key="name" />
         <Column title="Surname" dataIndex="surname" key="name" />
